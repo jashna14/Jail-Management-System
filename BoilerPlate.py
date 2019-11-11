@@ -8,22 +8,38 @@ def prisoner(jid):
 	print("3. Insert a tuple")
 	print("4. Calculate the age of the prisoner")
 	print("5. Calculate the period of captivity left for a prisoner")
-	val = input("Choose the query you want to execute> ")
+	val = int(input("Choose the query you want to execute> "))
 	if val == 1:
 		try:
 			row = {}
-	        print("Enter new prisoner's details: ")
-	        name = (input("Name (Fname Lname): ")).split(' ')
-	        row["Fname"] = name[0]
-	        row["Lname"] = name[1]
-	        row["Ssn"] = input("SSN: ")
-	        row["Bdate"] = input("Birth Date (YYYY-MM-DD): ")
-	        row["Address"] = input("Address: ")
-	        row["Sex"] = input("Sex: ")
-	        row["Salary"] = float(input("Salary: "))
-	        row["Dno"] = int(input("Dno: "))
+			print("Enter new prisoner's details: ")
+			name = (input("Name (Fname Lname): ")).split(' ')
+			row["PId"] = int(input("Prisoner Id: "))
+			row["Fname"] = name[0]
+			row["Lname"] = name[1]
+			row["jid"] = int(input("Jail id: "))
+			row["dname"] = input("Department name: ")
+			row["Add"] = input("Address: ")
+			row["confperiod"] = int(input("ConfinementPeriod(in years): "))
+			row["DOB"] = input("Birth Date (YYYY-MM-DD): ")
+			row["DOI"] = input("DateofImprisonment (YYYY-MM-DD): ")
 
+			if(row["jid"] == jid):
+				query = "INSERT INTO PRISONER VALUES('%d', '%s', '%s', '%d', '%s', '%s', '%d', '%s', '%s')" %(row["PId"], row["Fname"], row["Lname"], row["jid"], row["dname"], row["Add"], row["confperiod"], row["DOB"], row["DOI"])
+				cur.execute(query)
+				con.commit()
 
+				print("Inserted into Database")
+
+			else:
+				print("You insert only in your jail")	
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to insert into database")
+			print("************",e)	
+
+		return	
 
 def access(ch , Id):
 	cur = con.cursor()
