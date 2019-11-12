@@ -13,8 +13,8 @@ def prisoner(jid):
 		try:
 			row = {}
 			print("Enter new prisoner's details: ")
-			name = (input("Name (Fname Lname): ")).split(' ')
 			row["PId"] = int(input("Prisoner Id: "))
+			name = (input("Name (Fname Lname): ")).split(' ')
 			row["Fname"] = name[0]
 			row["Lname"] = name[1]
 			row["jid"] = int(input("Jail id: "))
@@ -146,7 +146,7 @@ def prisoner(jid):
 					con.commit()
 
 					print("Udated in Database")
-				
+				# *****************
 				if valu == 5:
 					inp = input("Please enter the new value> ")
 
@@ -354,6 +354,413 @@ def crime(jid):
 			print("Failed to update from database")
 			print("************",e)					
 
+def jail():
+	print("1. Insert a tuple")
+	print("2. Delete a tuple")
+	print("3. Update a tuple")
+	val = int(input("Choose the query you want to execute> "))
+	if val == 1:
+		try:
+			row = {}
+			print("Enter new Jail's details: ")
+			row["JId"] = int(input("Jail Id: "))
+			row["Jname"] = input("Jail name: ")
+			row["JAdd"] = input("Jail Address: ")
+			row["JCapacity"] = int(input("Jail Capacity: "))
+
+			query = "INSERT INTO JAIL VALUES('%d', '%s', '%s', '%d')" %(row["JId"], row["Jname"], row["JAdd"], row["JCapacity"])
+			cur.execute(query)
+			con.commit()
+
+			print("Inserted into Database")
+
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to insert into database")
+			print("************",e)
+
+	if val == 2:
+		try:
+			jid = int(input("Please Enter the Jail id you want to delete> "))
+			query = "DELETE FROM JAIL WHERE (JId = '%d')" %(jid)
+			cur.execute(query)
+			con.commit()
+
+			print("Deleted from Database")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to delete from database")
+			print("************",e)	
+
+	if val == 3:
+		jid = int(input("Please Enter the Jail id whose attribute you want to modify> "))
+		print("1. Jail Id")
+		print("2. Jail Name")
+		print("3. Jail Address")
+		print("4. Jail Capacity")
+		valu = int(input("Choose the Attribute you want to modify> "))
+		try:
+			if valu == 1:
+				inp = int(input("Please enter the new value> "))
+				
+				query = "SET FOREIGN_KEY_CHECKS=0;"
+				cur.execute(query)
+				con.commit()
+
+				query = "UPDATE JAIL SET JId = '%d' WHERE JId = '%d'" %(inp , jid)
+				cur.execute(query)
+				con.commit()
+
+				query = "UPDATE POLICEOFFICER SET POJailId = '%d' WHERE POJailId = '%d'" %(inp , jid)
+				cur.execute(query)
+				con.commit()
+
+				query = "UPDATE DEPARTMENT SET DJailId = '%d' WHERE DJailId = '%d'" %(inp , jid)
+				cur.execute(query)
+				con.commit()
+
+				query = "UPDATE PRISONER SET PJailId = '%d' WHERE PJailId = '%d'" %(inp , jid)
+				cur.execute(query)
+				con.commit()
+
+				query = "UPDATE PWORKSFOR SET JId = '%d' WHERE JId = '%d'" %(inp , jid)
+				cur.execute(query)
+				con.commit()
+
+				query = "UPDATE JWORKSFOR SET JId = '%d' WHERE JId = '%d'" %(inp , jid)
+				cur.execute(query)
+				con.commit()
+
+				query = "SET FOREIGN_KEY_CHECKS=1;"
+				cur.execute(query)
+				con.commit()
+
+				print("Udated in Database")
+
+			if valu == 2:
+				inp = input("Please enter the new value> ")
+
+				query = "UPDATE JAIL SET JName = '%s' WHERE JId = '%d'" %(inp , jid)
+				cur.execute(query)
+				con.commit()
+				
+				print("Udated in Database")
+
+			if valu == 3:
+				inp = input("Please enter the new value> ")
+
+				query = "UPDATE JAIL SET JAdd = '%s' WHERE JId = '%d'" %(inp , jid)
+				cur.execute(query)
+				con.commit()
+				
+				print("Udated in Database")
+
+			if valu == 4:
+				inp = int(input("Please enter the new value> "))
+
+				query = "UPDATE JAIL SET JCapacity = '%s' WHERE JId = '%d'" %(inp , jid)
+				cur.execute(query)
+				con.commit()
+				
+				print("Udated in Database")		
+
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to delete from database")
+			print("************",e)	
+
+
+def policeofficer():
+	print("1. Insert a tuple")
+	print("2. Delete a tuple")
+	print("3. Update a tuple")
+	print("4. Calculate Age of Police Officer")
+
+	val = int(input("Choose the query you want to execute> "))
+	if val == 1:
+		try:
+			row = {}
+			print("Enter new Police Officer's details: ")
+			row["POId"] = int(input("Prisoner Id: "))
+			name = (input("Name (Fname Lname): ")).split(' ')
+			row["Fname"] = name[0]
+			row["Lname"] = name[1]
+			row["POJailId"] = int(input("Jail id: "))
+			row["POAdd"] = input("Address: ")
+			row["PODOB"] = input("Birth Date (YYYY-MM-DD): ")
+			row["POSalary"] = int(input("Salary: "))
+			row["DOP"] = input("DateofPosting (YYYY-MM-DD): ")
+			row["JobType"] = input("JobType (Jailer or Guard): ")
+
+			query = "INSERT INTO POLICEOFFICER VALUES('%d', '%s', '%s', '%d', '%s', '%s', '%d', '%s', '%s')" %(row["POId"], row["Fname"], row["Lname"], row["POJailId"], row["POAdd"], row["PODOB"], row["POSalary"], row["DOP"], row["JobType"])
+			cur.execute(query)
+			con.commit()
+
+			print("Inserted into Database")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to insert into database")
+			print("************",e)	
+
+	if val == 2:
+		try:
+			poid = int(input("Please Enter the Police Officer id you want to delete> "))
+			query = "DELETE FROM POLICEOFFICER WHERE (POId = '%d')" %(poid)
+			cur.execute(query)
+			con.commit()
+
+			print("Deleted from Database")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to delete from database")
+			print("************",e)
+
+	if val == 3:
+		poid = int(input("Please Enter the Police Officer id whose attribute you want to modify> "))
+		print("1. Police Officer Id")
+		print("2. Police Officer First Name")
+		print("3. Police Officer Last Name")
+		print("4. Police Officer Add")
+		print("5. Police Officer DOB")
+		print("6. Police Officer Salary")
+		print("7. Police Officer Date of Posting")
+		print("8. Police Officer Job Type")
+		valu = int(input("Choose the Attribute you want to modify> "))
+		try:
+			if valu == 1:
+				inp = int(input("Please enter the new value> "))
+				
+				query = "SET FOREIGN_KEY_CHECKS=0;"
+				cur.execute(query)
+				con.commit()
+
+				query = "UPDATE POLICEOFFICER SET POId = '%d' WHERE POId = '%d'" %(inp , poid)
+				cur.execute(query)
+				con.commit()
+
+				query = "UPDATE DEPARTMENT SET DHeadId = '%d' WHERE DHeadId = '%d'" %(inp , poid)
+				cur.execute(query)
+				con.commit()
+
+				query = "UPDATE JWORKSFOR SET POId = '%d' WHERE POId = '%d'" %(inp , poid)
+				cur.execute(query)
+				con.commit()
+
+				query = "UPDATE POLICEOFFICERCONTACT SET POId = '%d' WHERE POId = '%d'" %(inp , poid)
+				cur.execute(query)
+				con.commit()
+
+				query = "UPDATE POLICEOFFICEREMAIL SET POId = '%d' WHERE POId = '%d'" %(inp , poid)
+				cur.execute(query)
+				con.commit()
+
+				query = "SET FOREIGN_KEY_CHECKS=1;"
+				cur.execute(query)
+				con.commit()
+
+
+				print("Udated in Database")
+
+			if valu == 2:
+				inp = input("Please enter the new value> ")
+				query = "UPDATE POLICEOFFICER SET POFName = '%s' WHERE POId = '%d'" %(inp , poid)
+				cur.execute(query)
+				con.commit()
+
+				print("Udated in Database")	
+
+			if valu == 3:
+				inp = input("Please enter the new value> ")
+				query = "UPDATE POLICEOFFICER SET POLName = '%s' WHERE POId = '%d'" %(inp , poid)
+				cur.execute(query)
+				con.commit()
+
+				print("Udated in Database")
+			
+			if valu == 4:
+				inp = input("Please enter the new value> ")
+				
+				query = "UPDATE POLICEOFFICER SET POAdd = '%s' WHERE POId = '%d'" %(inp , poid)
+				cur.execute(query)
+				con.commit()
+
+				print("Udated in Database")
+
+			if valu == 5:
+				inp = input("Please enter the new value> ")
+				query = "UPDATE POLICEOFFICER SET PODOB = '%s' WHERE POId = '%d'" %(inp , poid)
+				cur.execute(query)
+				con.commit()
+
+				print("Udated in Database")
+
+			if valu == 6:
+				inp = int(input("Please enter the new value> "))
+				query = "UPDATE POLICEOFFICER SET POSalary = '%d' WHERE POId = '%d'" %(inp , poid)
+				cur.execute(query)
+				con.commit()
+
+				print("Udated in Database")	
+
+			if valu == 7:
+				inp = input("Please enter the new value> ")
+				query = "UPDATE POLICEOFFICER SET PODateofPosting = '%s' WHERE POId = '%d'" %(inp , poid)
+				cur.execute(query)
+				con.commit()
+
+				print("Udated in Database")
+				
+			if valu == 8:
+				inp = input("Please enter the new value> ")
+				query = "UPDATE POLICEOFFICER SET JobType = '%s' WHERE POId = '%d'" %(inp , poid)
+				cur.execute(query)
+				con.commit()
+
+				print("Udated in Database")		
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to update in database")
+			print("************",e)
+
+	if val == 4:		
+		try:
+			poid = int(input("Please Enter the Police Officer's id whose age you want to Calculate > "))
+			query = "SELECT TIMESTAMPDIFF (YEAR, PODOB, CURDATE()) FROM POLICEOFFICER WHERE POId = '%d'" %(poid)
+			cur.execute(query)
+			age = cur.fetchall()
+			print("The age is ",end="")
+			print(age[0]['TIMESTAMPDIFF (YEAR, PODOB, CURDATE())'])
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to find from database")
+			print("************",e)
+
+def policeofficercontact():
+	print("1. Insert a tuple")
+	print("2. Delete a tuple")
+	print("3. Update a tuple")
+	val = int(input("Choose the query you want to execute> "))
+
+	if val == 1:
+		try:
+			row = {}
+			print("Enter new police officer's contact details: ")
+			row["POId"] = int(input("Police Officer Id: "))
+			row["POContact"] = input(" Police Officer Contact: ")
+
+			query = "INSERT INTO POLICEOFFICERCONTACT VALUES('%d', '%s')" %(row["POId"], row["POContact"])
+			cur.execute(query)
+			con.commit()
+
+			print("Inserted into Database")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to insert into database")
+			print("************",e)	
+
+	if val == 2:
+		try:
+			poid = int(input("Please Enter the police officer's id whose data you want to delete> "))
+			pocontact = input("Please Enter the corresponding contact> ")
+
+			query = "DELETE FROM POLICEOFFICERCONTACT WHERE (POId = '%d' AND POContact = '%s')" %(poid,pocontact)
+			cur.execute(query)
+			con.commit()
+
+			print("Deleted from Database")
+			
+		except Exception as e:
+			con.rollback()
+			print("Failed to delete from database")
+			print("************",e)
+
+	if val == 3:
+
+		try:
+			poid = int(input("Please Enter the police officer's id whose data you want to update> "))
+			pocontact = input("Please Enter the corresponding contact> ")
+
+			inp = input("Please enter the new contact> ")
+
+			query = "UPDATE POLICEOFFICERCONTACT SET POContact = '%s' WHERE (POId = '%d' AND POContact = '%s')" %(inp , poid,pocontact)
+			cur.execute(query)
+			con.commit()
+
+			print("Udated in Database")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to update from database")
+			print("************",e)							
+
+
+def policeofficeremail():
+	print("1. Insert a tuple")
+	print("2. Delete a tuple")
+	print("3. Update a tuple")
+	val = int(input("Choose the query you want to execute> "))
+
+	if val == 1:
+		try:
+			row = {}
+			print("Enter new police officer's email details: ")
+			row["POId"] = int(input("Police Officer Id: "))
+			row["POEmail"] = input(" Police Officer Email: ")
+
+			query = "INSERT INTO POLICEOFFICEREMAIL VALUES('%d', '%s')" %(row["POId"], row["POEmail"])
+			cur.execute(query)
+			con.commit()
+
+			print("Inserted into Database")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to insert into database")
+			print("************",e)	
+
+	if val == 2:
+		try:
+			poid = int(input("Please Enter the police officer's id whose data you want to delete> "))
+			poemail = input("Please Enter the corresponding email> ")
+
+			query = "DELETE FROM POLICEOFFICEREMAIL WHERE (POId = '%d' AND POEmail = '%s')" %(poid,poemail)
+			cur.execute(query)
+			con.commit()
+
+			print("Deleted from Database")
+			
+		except Exception as e:
+			con.rollback()
+			print("Failed to delete from database")
+			print("************",e)
+
+	if val == 3:
+
+		try:
+			poid = int(input("Please Enter the police officer's id whose data you want to update> "))
+			poemail = input("Please Enter the corresponding email> ")
+
+			inp = input("Please enter the new contact> ")
+
+			query = "UPDATE POLICEOFFICERCONTACT SET POEmail = '%s' WHERE (POId = '%d' AND POEmail = '%s')" %(inp , poid,poemail)
+			cur.execute(query)
+			con.commit()
+
+			print("Udated in Database")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to update from database")
+			print("************",e)									
+
 
 
 def access(ch , Id):
@@ -394,7 +801,7 @@ def access(ch , Id):
 			print("3. POLICEOFFICERCONTACT")
 			print("4. POLICEOFFICEREMAIL")
 			print("5. Exit")
-			val = int(input("Choose the Table you want to edit"))
+			val = int(input("Choose the Table you want to edit> "))
 			if val == 1:
 				jail()
 			if val == 2:
@@ -432,7 +839,7 @@ def formulate(ch):
 			print("Id not found or the Id does not corresponds to a Jailer")
 
 	if ch == 2:
-		passw = input("Please enter the Password>> ")
+		passw = input("Please enter the Password> ")
 		if passw == 'p':
 			print("Access granted")
 			access(ch , -1)

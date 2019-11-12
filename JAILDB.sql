@@ -41,7 +41,7 @@ CREATE TABLE `POLICEOFFICER` (
 	`POAdd` varchar(100) DEFAULT NULL,
 	`PODOB` date DEFAULT NULL,
 	`POSalary` int(8) NOT NULL,
-	`PDateofPosting` date NOT NULL,
+	`PODateofPosting` date NOT NULL,
 	`JobType` varchar(15) NOT NULL, 
 	PRIMARY KEY (`POId`),
 	FOREIGN KEY (`POJailId`) REFERENCES `JAIL` (`JId`) ON DELETE CASCADE,
