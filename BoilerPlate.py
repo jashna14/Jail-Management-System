@@ -80,6 +80,11 @@ def prisoner(jid):
 			if result[0]['PJailId'] == jid:
 				if valu == 1:
 					inp = int(input("Please enter the new value> "))
+					
+					query = "SET FOREIGN_KEY_CHECKS=0;"
+					cur.execute(query)
+					con.commit()
+
 					query = "UPDATE PRISONER SET PId = %d WHERE PId = %d" %(inp , pid)
 					cur.execute(query)
 					con.commit()
@@ -99,6 +104,11 @@ def prisoner(jid):
 					query = "UPDATE PWORKSFOR SET PId = %d WHERE PId = %d" %(inp , pid)
 					cur.execute(query)
 					con.commit()
+
+					query = "SET FOREIGN_KEY_CHECKS=1;"
+					cur.execute(query)
+					con.commit()
+
 
 					print("Udated in Database")
 
@@ -120,6 +130,11 @@ def prisoner(jid):
 					
 				if valu == 4:
 					inp = int(input("Please enter the new value> "))
+
+					query = "SET FOREIGN_KEY_CHECKS=0;"
+					cur.execute(query)
+					con.commit()
+					
 					query = "UPDATE PRISONER SET PJailId = %d WHERE PId = %d" %(inp , pid)
 					cur.execute(query)
 					con.commit()
@@ -128,15 +143,28 @@ def prisoner(jid):
 					cur.execute(query)
 					con.commit()
 
+					query = "SET FOREIGN_KEY_CHECKS=1;"
+					cur.execute(query)
+					con.commit()
+
 					print("Udated in Database")
 				
 				if valu == 5:
 					inp = int(input("Please enter the new value> "))
+
+					query = "SET FOREIGN_KEY_CHECKS=0;"
+					cur.execute(query)
+					con.commit()
+					
 					query = "UPDATE PRISONER SET PDname = %s WHERE PId = %d" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
 					query = "UPDATE PWORKSFOR SET DName = %s WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					query = "SET FOREIGN_KEY_CHECKS=1;"
 					cur.execute(query)
 					con.commit()
 
@@ -180,6 +208,50 @@ def prisoner(jid):
 			print("Failed to update in database")
 			print("************",e)
 
+	if val == 4:		
+		try:
+			pid = int(input("Please Enter the Prisoner's id whose age you want to Calculate > "))
+			query = "SELECT PJailId FROM PRISONER WHERE (PId = %d)" %(pid)
+			cur.execute(query)
+			result = cur.fetchall()
+			if result[0]['PJailId'] == jid:
+				query = "SELECT TIMESTAMPDIFF (YEAR, PDOB, CURDATE()) FROM PRISONER WHERE PId = %d" %(pid)
+				cur.execute(query)
+				age = cur.fetchall()
+				print("The age is ",end="")
+				print(age[0]['TIMESTAMPDIFF (YEAR, PDOB, CURDATE())'])
+			else:
+				print("You can access only in your jail")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to find from database")
+			print("************",e)
+
+	if val == 5:		
+		try:
+			pid = int(input("Please Enter the Prisoner's id whose the period of captivity left you want to find out > "))
+			query = "SELECT PJailId FROM PRISONER WHERE (PId = %d)" %(pid)
+			cur.execute(query)
+			result = cur.fetchall()
+			if result[0]['PJailId'] == jid:
+				query = "SELECT TIMESTAMPDIFF (YEAR, PDateofImprisonment, CURDATE()) FROM PRISONER WHERE PId = %d" %(pid)
+				cur.execute(query)
+				spend = cur.fetchall()
+
+				query = "SELECT PConfinementPeriod FROM PRISONER WHERE PId = %d" %(pid)
+				cur.execute(query)
+				Confinement_Period = cur.fetchall()
+
+				print("The period of captivity left is ",end="")
+				print(Confinement_Period[0]['PConfinementPeriod'] - spend[0]['TIMESTAMPDIFF (YEAR, PDateofImprisonment, CURDATE())'])
+			else:
+				print("You can access only in your jail")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to find from database")
+			print("************",e)
 
 
 
