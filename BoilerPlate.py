@@ -29,34 +29,47 @@ def prisoner(jid):
 			row["DOI"] = input("DateofImprisonment (YYYY-MM-DD): ")
 
 			if(row["jid"] == jid):
-				query = "INSERT INTO PRISONER VALUES('%d', '%s', '%s', '%d', '%s', '%s', '%d', '%s', '%s')" %(row["PId"], row["Fname"], row["Lname"], row["jid"], row["dname"], row["Add"], row["confperiod"], row["DOB"], row["DOI"])
-				cur.execute(query)
-				con.commit()
-				
-				query = "INSERT INTO PWORKSFOR VALUES('%d','%d','%s')" %(row["PId"],row["jid"],row["dname"])
-				cur.execute(query)
-				con.commit()
 
-				query = "SELECT DHeadId FROM DEPARTMENT WHERE DJailId='%d' AND DName='%s' " %(row["jid"],row["dname"])
-				cur.execute(query);
-				result=cur.fetchall()
-				poid=result[0]['DHeadId']
-				# print(poid)
-				# print(cur.fetchall())
+				dob=str(row["DOB"])
+				doi=str(row["DOI"])
+				listdob=dob.split("-")
+				listdoi=doi.split("-")
+				dobint=int(listdob[0])
+				doiint=int(listdoi[0])
+				# print(dobint,doiint);
+				if(doiint-dobint>=16):
 
-				# ***************************************************************************************
-				query = "SELECT COUNT(*) FROM JWORKSFOR WHERE JId='%d' AND DName='%s'" %(row["jid"],row["dname"])
-				cur.execute(query)
-				result=cur.fetchall()
-				cnt=result[0]['COUNT(*)']
-				if(cnt == 0):
-					query = "INSERT INTO JWORKSFOR VALUES('%d','%s','%d')" %(row["jid"],row["dname"],poid)
+					query = "INSERT INTO PRISONER VALUES('%d', '%s', '%s', '%d', '%s', '%s', '%d', '%s', '%s')" %(row["PId"], row["Fname"], row["Lname"], row["jid"], row["dname"], row["Add"], row["confperiod"], row["DOB"], row["DOI"])
 					cur.execute(query)
 					con.commit()
-				# ***************************************************************************************
+					
+					query = "INSERT INTO PWORKSFOR VALUES('%d','%d','%s')" %(row["PId"],row["jid"],row["dname"])
+					cur.execute(query)
+					con.commit()
 
-				print("Inserted into Database")
-				print("")
+					query = "SELECT DHeadId FROM DEPARTMENT WHERE DJailId='%d' AND DName='%s' " %(row["jid"],row["dname"])
+					cur.execute(query);
+					result=cur.fetchall()
+					poid=result[0]['DHeadId']
+					# print(poid)
+					# print(cur.fetchall())
+
+					# ***************************************************************************************
+					query = "SELECT COUNT(*) FROM JWORKSFOR WHERE JId='%d' AND DName='%s'" %(row["jid"],row["dname"])
+					cur.execute(query)
+					result=cur.fetchall()
+					cnt=result[0]['COUNT(*)']
+					if(cnt == 0):
+						query = "INSERT INTO JWORKSFOR VALUES('%d','%s','%d')" %(row["jid"],row["dname"],poid)
+						cur.execute(query)
+						con.commit()
+					# ***************************************************************************************
+
+					print("Inserted into Database")
+					print("")
+				
+				else:
+					print("Age must be greater than 16 years at time of imprisonment \n")
 
 			else:
 				print("You can insert only in your jail")	
