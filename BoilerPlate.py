@@ -174,6 +174,32 @@ def prisoner(jid):
 					cur.execute(query)
 					con.commit()
 
+
+					query = "SELECT PDname FROM PRISONER WHERE PId ='%d' " %(pid)
+					cur.execute(query)
+					result = cur.fetchall()
+					dname = result[0]['PDname']
+
+
+					query = "SELECT DHeadId FROM DEPARTMENT WHERE DJailId='%d' AND DName='%s' " %(inp,dname)
+					cur.execute(query);
+					result=cur.fetchall()
+					poid=result[0]['DHeadId']
+					# print(poid)
+					# print(cur.fetchall())
+
+					# ***************************************************************************************
+					query = "SELECT COUNT(*) FROM JWORKSFOR WHERE JId='%d' AND DName='%s'" %(inp,dname)
+					cur.execute(query)
+					result=cur.fetchall()
+					cnt=result[0]['COUNT(*)']
+					if(cnt == 0):
+						query = "INSERT INTO JWORKSFOR VALUES('%d','%s','%d')" %(inp,dname,poid)
+						cur.execute(query)
+						con.commit()
+					# ***************************************************************************************
+
+
 					query = "SET FOREIGN_KEY_CHECKS=1;"
 					cur.execute(query)
 					con.commit()
@@ -253,6 +279,7 @@ def prisoner(jid):
 			cur.execute(query)
 			result = cur.fetchall()
 			if result[0]['PJailId'] == jid:
+
 				query = "SELECT TIMESTAMPDIFF (YEAR, PDOB, CURDATE()) FROM PRISONER WHERE PId = '%d'" %(pid)
 				cur.execute(query)
 				age = cur.fetchall()
@@ -316,6 +343,10 @@ def prisoner(jid):
 			con.rollback()
 			print("Failed to find from database")
 			print("***",e,"***")
+
+	a=input("<< press any key to continue >> \n")
+	temp = sp.call('clear',shell=True)
+
 
 
 
@@ -428,7 +459,9 @@ def crime(jid):
 		except Exception as e:
 			con.rollback()
 			print("Failed to update from database")
-			print("***",e,"***")					
+			print("***",e,"***")
+	a=input("<< press any key to continue >> \n")
+	temp = sp.call('clear',shell=True)					
 
 
 
@@ -590,6 +623,8 @@ def jail():
 			con.rollback()
 			print("Failed to find from database")
 			print("***",e,"***")
+	a=input("<< press any key to continue >> \n")
+	temp = sp.call('clear',shell=True)
 
 
 
@@ -614,13 +649,16 @@ def policeofficer():
 			row["POSalary"] = int(input("Salary: "))
 			row["DOP"] = input("DateofPosting (YYYY-MM-DD): ")
 			row["JobType"] = input("JobType (Jailer or Guard): ")
+			
+			if(row["JobType"]=="Jailer" or row["JobType"]=="Guard"):
+					query = "INSERT INTO POLICEOFFICER VALUES('%d', '%s', '%s', '%d', '%s', '%s', '%d', '%s', '%s')" %(row["POId"], row["Fname"], row["Lname"], row["POJailId"], row["POAdd"], row["PODOB"], row["POSalary"], row["DOP"], row["JobType"])
+					cur.execute(query)
+					con.commit()
 
-			query = "INSERT INTO POLICEOFFICER VALUES('%d', '%s', '%s', '%d', '%s', '%s', '%d', '%s', '%s')" %(row["POId"], row["Fname"], row["Lname"], row["POJailId"], row["POAdd"], row["PODOB"], row["POSalary"], row["DOP"], row["JobType"])
-			cur.execute(query)
-			con.commit()
-
-			print("Inserted into Database")
-			print("")
+					print("Inserted into Database")
+					print("")
+			else:
+				print("INVALID JOB TYPE\n")
 
 
 		except Exception as e:
@@ -750,12 +788,16 @@ def policeofficer():
 
 			if valu == 8:
 				inp = input("Please enter the new value> ")
-				query = "UPDATE POLICEOFFICER SET JobType = '%s' WHERE POId = '%d'" %(inp , poid)
-				cur.execute(query)
-				con.commit()
+				if(inp == "Jailer" or inp == "Guard"):
 
-				print("Udated in Database")		
-				print("")
+					query = "UPDATE POLICEOFFICER SET JobType = '%s' WHERE POId = '%d'" %(inp , poid)
+					cur.execute(query)
+					con.commit()
+
+					print("Updated in Database")		
+					print("")
+				else:
+					print("INVALID INPUT\n")
 
 		except Exception as e:
 			con.rollback()
@@ -777,6 +819,8 @@ def policeofficer():
 			con.rollback()
 			print("Failed to find from database")
 			print("***",e,"***")
+	a=input("<< press any key to continue >> \n")
+	temp = sp.call('clear',shell=True)
 
 
 
@@ -851,7 +895,10 @@ def policeofficercontact():
 		except Exception as e:
 			con.rollback()
 			print("Failed to update from database")
-			print("***",e,"***")							
+			print("***",e,"***")			
+
+	a=input("<< press any key to continue >> \n")
+	temp = sp.call('clear',shell=True)				
 
 
 
@@ -918,7 +965,9 @@ def policeofficeremail():
 		except Exception as e:
 			con.rollback()
 			print("Failed to update from database")
-			print("***",e,"***")	
+			print("***",e,"***")
+	a=input("<< press any key to continue >> \n")
+	temp = sp.call('clear',shell=True)	
 
 
 
@@ -959,6 +1008,8 @@ def avgexpense():
 		print("Failed to find from database")
 		print("***",e,"***")
 
+	a=input("<< press any key to continue >> \n")
+	temp = sp.call('clear',shell=True)
 
 
 def access(ch , Id):
@@ -976,6 +1027,7 @@ def access(ch , Id):
 			print("4. VISITOR")
 			print("5. VISITORCONTACT")
 			print("6. Exit")
+
 			val = int(input("Choose the Table you want to edit> "))
 			if val == 1:
 				prisoner(jid)
@@ -1090,4 +1142,3 @@ while(1):
 	except:
 		temp = sp.call('clear',shell=True)
 		print("Connection Refused: Either username or password is incorrect or user doesn't have access to database")
-
