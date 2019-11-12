@@ -39,16 +39,14 @@ def prisoner(jid):
 			print("Failed to insert into database")
 			print("************",e)	
 
-		return	
-
 	if val == 2:
 		try:
 			pid = int(input("Please Enter the Prisoner id you want to delete> "))
-			query = "SELECT PJailId FROM PRISONER WHERE (PId = %d)" %(pid)
+			query = "SELECT PJailId FROM PRISONER WHERE (PId = '%d')" %(pid)
 			cur.execute(query)
 			result = cur.fetchall()
 			if result[0]['PJailId'] == jid:
-				query = "DELETE FROM PRISONER WHERE (PId = %d)" %(pid)
+				query = "DELETE FROM PRISONER WHERE (PId = '%d')" %(pid)
 				cur.execute(query)
 				con.commit()
 
@@ -74,7 +72,7 @@ def prisoner(jid):
 		print("9. Prisoner Date of Imprisonment")
 		valu = int(input("Choose the Attribute you want to modify> "))
 		try:
-			query = "SELECT PJailId FROM PRISONER WHERE (PId = %d)" %(pid)
+			query = "SELECT PJailId FROM PRISONER WHERE (PId = '%d')" %(pid)
 			cur.execute(query)
 			result = cur.fetchall()
 			if result[0]['PJailId'] == jid:
@@ -85,23 +83,23 @@ def prisoner(jid):
 					cur.execute(query)
 					con.commit()
 
-					query = "UPDATE PRISONER SET PId = %d WHERE PId = %d" %(inp , pid)
+					query = "UPDATE PRISONER SET PId = '%d' WHERE PId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
-					query = "UPDATE CRIME SET CPId = %d WHERE CPId = %d" %(inp , pid)
+					query = "UPDATE CRIME SET CPId = '%d' WHERE CPId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
-					query = "UPDATE VISITOR SET VPId = %d WHERE VPId = %d" %(inp , pid)
+					query = "UPDATE VISITOR SET VPId = '%d' WHERE VPId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
-					query = "UPDATE VISITORCONTACT SET VPId = %d WHERE VPId = %d" %(inp , pid)
+					query = "UPDATE VISITORCONTACT SET VPId = '%d' WHERE VPId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
-					query = "UPDATE PWORKSFOR SET PId = %d WHERE PId = %d" %(inp , pid)
+					query = "UPDATE PWORKSFOR SET PId = '%d' WHERE PId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
@@ -114,7 +112,7 @@ def prisoner(jid):
 
 				if valu == 2:
 					inp = input("Please enter the new value> ")
-					query = "UPDATE PRISONER SET PFirstName = %s WHERE PId = %d" %(inp , pid)
+					query = "UPDATE PRISONER SET PFirstName = '%s' WHERE PId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
@@ -122,7 +120,7 @@ def prisoner(jid):
 
 				if valu == 3:
 					inp = input("Please enter the new value> ")
-					query = "UPDATE PRISONER SET PLastName = %s WHERE PId = %d" %(inp , pid)
+					query = "UPDATE PRISONER SET PLastName = '%s' WHERE PId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
@@ -135,11 +133,11 @@ def prisoner(jid):
 					cur.execute(query)
 					con.commit()
 					
-					query = "UPDATE PRISONER SET PJailId = %d WHERE PId = %d" %(inp , pid)
+					query = "UPDATE PRISONER SET PJailId = '%d' WHERE PId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
-					query = "UPDATE PWORKSFOR SET JId = %d WHERE PId = %d" %(inp , pid)
+					query = "UPDATE PWORKSFOR SET JId = '%d' WHERE PId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
@@ -150,17 +148,17 @@ def prisoner(jid):
 					print("Udated in Database")
 				
 				if valu == 5:
-					inp = int(input("Please enter the new value> "))
+					inp = input("Please enter the new value> ")
 
 					query = "SET FOREIGN_KEY_CHECKS=0;"
 					cur.execute(query)
 					con.commit()
 					
-					query = "UPDATE PRISONER SET PDname = %s WHERE PId = %d" %(inp , pid)
+					query = "UPDATE PRISONER SET PDname = '%s' WHERE PId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
-					query = "UPDATE PWORKSFOR SET DName = %s WHERE PId = %d" %(inp , pid)
+					query = "UPDATE PWORKSFOR SET DName = '%s' WHERE PId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
@@ -171,8 +169,8 @@ def prisoner(jid):
 					print("Udated in Database")
 
 				if valu == 6:
-					inp = int(input("Please enter the new value> "))
-					query = "UPDATE PRISONER SET PAdd = %s WHERE PId = %d" %(inp , pid)
+					inp = input("Please enter the new value> ")
+					query = "UPDATE PRISONER SET PAdd = '%s' WHERE PId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
@@ -180,23 +178,23 @@ def prisoner(jid):
 
 				if valu == 7:
 					inp = int(input("Please enter the new value> "))
-					query = "UPDATE PRISONER SET PConfinementPeriod = %d WHERE PId = %d" %(inp , pid)
+					query = "UPDATE PRISONER SET PConfinementPeriod = '%d' WHERE PId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
 					print("Udated in Database")	
 
 				if valu == 8:
-					inp = int(input("Please enter the new value> "))
-					query = "UPDATE PRISONER SET PDOB = %s WHERE PId = %d" %(inp , pid)
+					inp = input("Please enter the new value> ")
+					query = "UPDATE PRISONER SET PDOB = '%s' WHERE PId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
 					print("Udated in Database")
 					
 				if valu == 9:
-					inp = int(input("Please enter the new value> "))
-					query = "UPDATE PRISONER SET PDateofImprisonment = %s WHERE PId = %d" %(inp , pid)
+					inp = input("Please enter the new value> ")
+					query = "UPDATE PRISONER SET PDateofImprisonment = '%s' WHERE PId = '%d'" %(inp , pid)
 					cur.execute(query)
 					con.commit()
 
@@ -211,11 +209,11 @@ def prisoner(jid):
 	if val == 4:		
 		try:
 			pid = int(input("Please Enter the Prisoner's id whose age you want to Calculate > "))
-			query = "SELECT PJailId FROM PRISONER WHERE (PId = %d)" %(pid)
+			query = "SELECT PJailId FROM PRISONER WHERE (PId = '%d')" %(pid)
 			cur.execute(query)
 			result = cur.fetchall()
 			if result[0]['PJailId'] == jid:
-				query = "SELECT TIMESTAMPDIFF (YEAR, PDOB, CURDATE()) FROM PRISONER WHERE PId = %d" %(pid)
+				query = "SELECT TIMESTAMPDIFF (YEAR, PDOB, CURDATE()) FROM PRISONER WHERE PId = '%d'" %(pid)
 				cur.execute(query)
 				age = cur.fetchall()
 				print("The age is ",end="")
@@ -231,15 +229,15 @@ def prisoner(jid):
 	if val == 5:		
 		try:
 			pid = int(input("Please Enter the Prisoner's id whose the period of captivity left you want to find out > "))
-			query = "SELECT PJailId FROM PRISONER WHERE (PId = %d)" %(pid)
+			query = "SELECT PJailId FROM PRISONER WHERE (PId = '%d')" %(pid)
 			cur.execute(query)
 			result = cur.fetchall()
 			if result[0]['PJailId'] == jid:
-				query = "SELECT TIMESTAMPDIFF (YEAR, PDateofImprisonment, CURDATE()) FROM PRISONER WHERE PId = %d" %(pid)
+				query = "SELECT TIMESTAMPDIFF (YEAR, PDateofImprisonment, CURDATE()) FROM PRISONER WHERE PId = '%d'" %(pid)
 				cur.execute(query)
 				spend = cur.fetchall()
 
-				query = "SELECT PConfinementPeriod FROM PRISONER WHERE PId = %d" %(pid)
+				query = "SELECT PConfinementPeriod FROM PRISONER WHERE PId = '%d'" %(pid)
 				cur.execute(query)
 				Confinement_Period = cur.fetchall()
 
@@ -253,16 +251,119 @@ def prisoner(jid):
 			print("Failed to find from database")
 			print("************",e)
 
+def crime(jid):
+	print("1. Insert a tuple")
+	print("2. Delete a tuple")
+	print("3. Update a tuple")
+	val = int(input("Choose the query you want to execute> "))
+
+	if val == 1:
+		try:
+			row = {}
+			print("Enter new crime details: ")
+			row["CPId"] = int(input("Prisoner Id: "))
+			row["CType"] = input("Crime Type: ")
+			row["CDate"] = input("Crime Date (YYYY-MM-DD): ")
+			row["CLocation"] = input("Crime Location: ")
+
+			query = "SELECT PJailId FROM PRISONER WHERE (PId = '%d')" %(row["CPId"])
+			cur.execute(query)
+			result = cur.fetchall()
+			if result[0]['PJailId'] == jid:
+				query = "INSERT INTO CRIME VALUES('%d', '%s', '%s', '%s')" %(row["CPId"], row["CType"], row["CDate"], row["CLocation"])
+				cur.execute(query)
+				con.commit()
+
+				print("Inserted into Database")
+
+			else:
+				print("You can insert only in your jail")	
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to insert into database")
+			print("************",e)	
+
+	if val == 2:
+		try:
+			cpid = int(input("Please Enter the Prisoner's id whose crime data you want to delete> "))
+			ctype = input("Please Enter the corresponding crime type> ")
+
+			query = "SELECT PJailId FROM PRISONER WHERE (PId = '%d')" %(cpid)
+			cur.execute(query)
+			result = cur.fetchall()
+			if result[0]['PJailId'] == jid:
+				query = "DELETE FROM CRIME WHERE (CPId = '%d' AND CType = '%s')" %(cpid,ctype)
+				cur.execute(query)
+				con.commit()
+
+				print("Deleted from Database")
+			else:
+				print("You can delete only in your jail")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to delete from database")
+			print("************",e)
+
+	if val == 3:
+		cpid = int(input("Please Enter the Prisoner id whose attribute you want to modify> "))
+		ctype = input("Please Enter the corresponding crime type> ")
+
+		print("1. Crime Type")
+		print("2. Crime Date")
+		print("3. Crime Location")
+		valu = int(input("Choose the Attribute you want to modify> "))
+		try:
+			query = "SELECT PJailId FROM PRISONER WHERE (PId = '%d')" %(cpid)
+			cur.execute(query)
+			result = cur.fetchall()
+			if result[0]['PJailId'] == jid:
+				if valu == 1:
+					inp = input("Please enter the new value> ")
+
+					query = "UPDATE CRIME SET CType = '%s' WHERE (CPId = '%d' AND CType = '%s')" %(inp , cpid, ctype)
+					cur.execute(query)
+					con.commit()
+
+					print("Udated in Database")
+
+				if valu == 2:
+					inp = input("Please enter the new value> ")
+
+					query = "UPDATE CRIME SET CDate = '%s' WHERE (CPId = '%d' AND CType = '%s')" %(inp , cpid, ctype)
+					cur.execute(query)
+					con.commit()
+
+					print("Udated in Database")
+
+				if valu == 3:
+					inp = input("Please enter the new value> ")
+
+					query = "UPDATE CRIME SET CLocation = '%s' WHERE (CPId = '%d' AND CType = '%s')" %(inp , cpid, ctype)
+					cur.execute(query)
+					con.commit()		
+
+					print("Udated in Database")
+
+			else:
+				print("You can update only in your jail")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to update from database")
+			print("************",e)					
+
 
 
 def access(ch , Id):
 	cur = con.cursor()
 	if ch == 1:
-		query = "SELECT POJailId FROM POLICEOFFICER WHERE (POId = %d)" %(Id)
+		query = "SELECT POJailId FROM POLICEOFFICER WHERE (POId = '%d')" %(Id)
 		cur.execute(query)
 		result = cur.fetchall()
 		jid = result[0]['POJailId']
-		print("You have access only to the tuples that are related to your Jail with JailId %d in the database" %(jid))
+		print("You have access only to the tuples that are related to your Jail with JailId '%d' in the database" %(jid))
 		while(1):
 			print("1. PRISONER")
 			print("2. CRIME")
@@ -317,7 +418,7 @@ def formulate(ch):
 
 	if ch == 1:
 		Id = int(input("Please enter your Id>> "))
-		query = "SELECT COUNT(*) FROM POLICEOFFICER WHERE (POId = %d AND JobType = 'Jailer')" %(Id)
+		query = "SELECT COUNT(*) FROM POLICEOFFICER WHERE (POId = '%d' AND JobType = 'Jailer')" %(Id)
 		cur.execute(query)
 		result = cur.fetchall()
 		if result[0]["COUNT(*)"] == 1:
