@@ -426,6 +426,8 @@ def crime(jid):
 			print("Failed to update from database")
 			print("***",e,"***")					
 
+
+
 def jail():
 	print("1. Insert a tuple")
 	print("2. Delete a tuple")
@@ -584,6 +586,7 @@ def jail():
 			con.rollback()
 			print("Failed to find from database")
 			print("***",e,"***")
+
 
 
 def policeofficer():
@@ -771,6 +774,8 @@ def policeofficer():
 			print("Failed to find from database")
 			print("***",e,"***")
 
+
+
 def policeofficercontact():
 	print("1. Insert a tuple")
 	print("2. Delete a tuple")
@@ -781,15 +786,20 @@ def policeofficercontact():
 		try:
 			row = {}
 			print("Enter new police officer's contact details: ")
+			
 			row["POId"] = int(input("Police Officer Id: "))
 			row["POContact"] = input(" Police Officer Contact: ")
+			num=int(row["POContact"]);
+			# print(num);
+			if(num >= 6000000000 and num < 10000000000 ):
+				query = "INSERT INTO POLICEOFFICERCONTACT VALUES('%d', '%s')" %(row["POId"], row["POContact"])
+				cur.execute(query)
+				con.commit()
 
-			query = "INSERT INTO POLICEOFFICERCONTACT VALUES('%d', '%s')" %(row["POId"], row["POContact"])
-			cur.execute(query)
-			con.commit()
-
-			print("Inserted into Database")
-			print("")
+				print("Inserted into Database")
+				print("")
+			else:
+				print("INVALID CONTACT NUMBER\n")
 
 
 		except Exception as e:
@@ -821,12 +831,16 @@ def policeofficercontact():
 			pocontact = input("Please Enter the corresponding contact> ")
 
 			inp = input("Please enter the new contact> ")
+			num = int(inp)
+			if(num >= 6000000000 and num < 10000000000):
+				query = "UPDATE POLICEOFFICERCONTACT SET POContact = '%s' WHERE (POId = '%d' AND POContact = '%s')" %(inp , poid,pocontact)
+				cur.execute(query)
+				con.commit()
 
-			query = "UPDATE POLICEOFFICERCONTACT SET POContact = '%s' WHERE (POId = '%d' AND POContact = '%s')" %(inp , poid,pocontact)
-			cur.execute(query)
-			con.commit()
-
-			print("Udated in Database")
+			else:
+				print("INVALID CONTACT NUMBER")
+				
+			print("Updated in Database")
 			print("")
 
 
@@ -834,6 +848,7 @@ def policeofficercontact():
 			con.rollback()
 			print("Failed to update from database")
 			print("***",e,"***")							
+
 
 
 def policeofficeremail():
@@ -902,6 +917,7 @@ def policeofficeremail():
 			print("***",e,"***")	
 
 
+
 def avgexpense():
 	try:
 		
@@ -938,6 +954,7 @@ def avgexpense():
 		con.rollback()
 		print("Failed to find from database")
 		print("***",e,"***")
+
 
 
 def access(ch , Id):
@@ -1023,6 +1040,7 @@ def formulate(ch):
 			print("Wrong Password")
 
 
+
 while(1):
 	temp = sp.call('clear',shell=True)
 	username = input("Username for accessing MySQL:")
@@ -1068,3 +1086,4 @@ while(1):
 	except:
 		temp = sp.call('clear',shell=True)
 		print("Connection Refused: Either username or password is incorrect or user doesn't have access to database")
+
