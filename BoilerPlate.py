@@ -817,27 +817,8 @@ def policeofficeremail():
 
 def avgexpense():
 	try:
-		# expenditure=0;
-		# jid = int(input("Please Enter the Jails's id whose monthly expenditure you want to find out > "))
-		# query = "SELECT PId,DWorkHours,DWage FROM PRISONER,DEPARTMENT WHERE (PDname=DName AND PJailId=DJailId AND PJailId = '%d')" %(jid)
-		# cur.execute(query)
-		# result = cur.fetchall()
-
-		# for prisoner in result:
-		# 	hrs=prisoner['DWorkHours']
-		# 	wage=prisoner['DWage']
-		# 	expenditure+=4*hrs*wage;
 		
-		# query=	"SELECT SUM(POSalary) FROM POLICEOFFICER WHERE POJailId= '%d' " %(jid)
-		# cur.execute(query)
-		# result=cur.fetchall()
-		# # print(result[0]['SUM(POSalary)'])
-		# expenditure+= result[0]['SUM(POSalary)']
-		# print("Total expenditure for the Jail is ->",expenditure)
-		# 	# print(prisoner['PId'],hrs,wage)
-
 		expenditure=0;
-
 		query="SELECT JId from JAIL";
 		cur.execute(query);
 		result=cur.fetchall()
@@ -910,7 +891,7 @@ def access(ch , Id):
 			print("2. POLICEOFFICER")
 			print("3. POLICEOFFICERCONTACT")
 			print("4. POLICEOFFICEREMAIL")
-			print("5. Avg. expenditure of a prisoner")
+			print("5. Average expenditure of a prisoner")
 			print("6. Exit")
 			val = int(input("Choose the Table you want to edit> "))
 			if val == 1:
