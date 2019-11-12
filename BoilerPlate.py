@@ -5,7 +5,7 @@ import pymysql.cursors
 def prisoner(jid):
 	print("1. Insert a tuple")
 	print("2. Delete a tuple")
-	print("3. Insert a tuple")
+	print("3. Update a tuple")
 	print("4. Calculate the age of the prisoner")
 	print("5. Calculate the period of captivity left for a prisoner")
 	val = int(input("Choose the query you want to execute> "))
@@ -32,7 +32,7 @@ def prisoner(jid):
 				print("Inserted into Database")
 
 			else:
-				print("You insert only in your jail")	
+				print("You can insert only in your jail")	
 
 		except Exception as e:
 			con.rollback()
@@ -40,6 +40,148 @@ def prisoner(jid):
 			print("************",e)	
 
 		return	
+
+	if val == 2:
+		try:
+			pid = int(input("Please Enter the Prisoner id you want to delete> "))
+			query = "SELECT PJailId FROM PRISONER WHERE (PId = %d)" %(pid)
+			cur.execute(query)
+			result = cur.fetchall()
+			if result[0]['PJailId'] == jid:
+				query = "DELETE FROM PRISONER WHERE (PId = %d)" %(pid)
+				cur.execute(query)
+				con.commit()
+
+				print("Deleted from Database")
+			else:
+				print("You can delete only in your jail")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to delete from database")
+			print("************",e)
+
+	if val == 3:
+		pid = int(input("Please Enter the Prisoner id whose attribute you want to modify> "))
+		print("1. Prisoner Id")
+		print("2. Prisoner First Name")
+		print("3. Prisoner Last Name")
+		print("4. Prisoner Jail Id")
+		print("5. Prisoner Department Name")
+		print("6. Prisoner Add")
+		print("7. Prisoner Confinement Period")
+		print("8. Prisoner DOB")
+		print("9. Prisoner Date of Imprisonment")
+		valu = int(input("Choose the Attribute you want to modify> "))
+		try:
+			query = "SELECT PJailId FROM PRISONER WHERE (PId = %d)" %(pid)
+			cur.execute(query)
+			result = cur.fetchall()
+			if result[0]['PJailId'] == jid:
+				if valu == 1:
+					inp = int(input("Please enter the new value> "))
+					query = "UPDATE PRISONER SET PId = %d WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					query = "UPDATE CRIME SET CPId = %d WHERE CPId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					query = "UPDATE VISITOR SET VPId = %d WHERE VPId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					query = "UPDATE VISITORCONTACT SET VPId = %d WHERE VPId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					query = "UPDATE PWORKSFOR SET PId = %d WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					print("Udated in Database")
+
+				if valu == 2:
+					inp = input("Please enter the new value> ")
+					query = "UPDATE PRISONER SET PFirstName = %s WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					print("Udated in Database")	
+
+				if valu == 3:
+					inp = input("Please enter the new value> ")
+					query = "UPDATE PRISONER SET PLastName = %s WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					print("Udated in Database")
+					
+				if valu == 4:
+					inp = int(input("Please enter the new value> "))
+					query = "UPDATE PRISONER SET PJailId = %d WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					query = "UPDATE PWORKSFOR SET JId = %d WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					print("Udated in Database")
+				
+				if valu == 5:
+					inp = int(input("Please enter the new value> "))
+					query = "UPDATE PRISONER SET PDname = %s WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					query = "UPDATE PWORKSFOR SET DName = %s WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					print("Udated in Database")
+
+				if valu == 6:
+					inp = int(input("Please enter the new value> "))
+					query = "UPDATE PRISONER SET PAdd = %s WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					print("Udated in Database")
+
+				if valu == 7:
+					inp = int(input("Please enter the new value> "))
+					query = "UPDATE PRISONER SET PConfinementPeriod = %d WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					print("Udated in Database")	
+
+				if valu == 8:
+					inp = int(input("Please enter the new value> "))
+					query = "UPDATE PRISONER SET PDOB = %s WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					print("Udated in Database")
+					
+				if valu == 9:
+					inp = int(input("Please enter the new value> "))
+					query = "UPDATE PRISONER SET PDateofImprisonment = %s WHERE PId = %d" %(inp , pid)
+					cur.execute(query)
+					con.commit()
+
+					print("Udated in Database")		
+			else:
+				print("You can modify only in your jail")					
+		except Exception as e:
+			con.rollback()
+			print("Failed to update in database")
+			print("************",e)
+
+
+
 
 def access(ch , Id):
 	cur = con.cursor()
