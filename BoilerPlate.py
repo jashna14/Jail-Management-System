@@ -32,6 +32,24 @@ def prisoner(jid):
 				query = "INSERT INTO PRISONER VALUES('%d', '%s', '%s', '%d', '%s', '%s', '%d', '%s', '%s')" %(row["PId"], row["Fname"], row["Lname"], row["jid"], row["dname"], row["Add"], row["confperiod"], row["DOB"], row["DOI"])
 				cur.execute(query)
 				con.commit()
+				
+				query = "INSERT INTO PWORKSFOR VALUES('%d','%d','%s')" %(row["PId"],row["jid"],row["dname"])
+				cur.execute(query)
+				con.commit()
+
+				# query = "SELECT DHeadId FROM DEPARTMENT WHERE DJailId='%d' AND DName='%s' " %(row["jid"],row["dname"])
+				# cur.execute(query);
+				# result=cur.fetchall()
+				# poid=result[0]['DHeadId']
+				# print(poid)
+				# print(cur.fetchall())
+
+				# ***************************************************************************************
+				# query = "SELECT COUNT(*) FROM JWORKSFOR WHERE JId='%d' AND DName='%s'" %(row["jid"],row["dname"])
+				# query = "INSERT INTO JWORKSFOR VALUES('%d','%s','%d')" %(row["jid"],row["dname"],poid)
+				# cur.execute(query)
+				# con.commit()
+				# ***************************************************************************************
 
 				print("Inserted into Database")
 				print("")
@@ -65,7 +83,7 @@ def prisoner(jid):
 		except Exception as e:
 			con.rollback()
 			print("Failed to delete from database")
-			print("************",e,"****")
+			print("***",e,"***")
 
 	if val == 3:
 		pid = int(input("Please Enter the Prisoner id whose attribute you want to modify> "))
@@ -282,7 +300,7 @@ def prisoner(jid):
 
 				hrs=result[0]['DWorkHours']
 				wage=result[0]['DWage']
-				print("Monthly wage of the asked prisoner is ",4*hrs*wage)
+				print("Monthly wage of the asked prisoner with PId->",pid," is>> ",4*hrs*wage)
 				print("")
 			
 			else:
@@ -537,6 +555,12 @@ def jail():
 		try:
 			expenditure=0;
 			jid = int(input("Please Enter the Jails's id whose monthly expenditure you want to find out > "))
+			query = "SELECT JName from JAIL WHERE JId='%d'" %(jid)
+			cur.execute(query)
+			result=cur.fetchall()
+			jname=result[0]['JName']
+			# print(jname)
+			print(result)
 			query = "SELECT PId,DWorkHours,DWage FROM PRISONER,DEPARTMENT WHERE (PDname=DName AND PJailId=DJailId AND PJailId = '%d')" %(jid)
 			cur.execute(query)
 			result = cur.fetchall()
@@ -551,7 +575,7 @@ def jail():
 			result=cur.fetchall()
 			# print(result[0]['SUM(POSalary)'])
 			expenditure+= result[0]['SUM(POSalary)']
-			print("Total expenditure for the Jail is ->",expenditure)
+			print("Total expenditure for the",jname,"with id=",jid,"is ->",expenditure)
 			print("")
 				# print(prisoner['PId'],hrs,wage)
 
@@ -936,12 +960,9 @@ def access(ch , Id):
 				prisoner(jid)
 			if val == 2:
 				crime(jid)	
-			if val == 3:
-				department(jid)
-			if val == 4:
-				visitor(jid)
-			if val == 5:
-				visitorconact(jid)
+			if val == 3 or val == 4 or val == 5:
+				print("\n******UNDER CONSTRUCTION :(********");
+				print()
 			if val == 6:
 				break
 			else:
