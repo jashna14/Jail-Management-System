@@ -260,20 +260,13 @@ def prisoner(jid):
 			cur.execute(query)
 			result = cur.fetchall()
 			if result[0]['PJailId'] == jid:
-				# query = "SELECT TIMESTAMPDIFF (YEAR, PDateofImprisonment, CURDATE()) FROM PRISONER WHERE PId = '%d'" %(pid)
-				# cur.execute(query)
-				# spend = cur.fetchall()
 
-				# query = "SELECT PConfinementPeriod FROM PRISONER WHERE PId = '%d'" %(pid)
-				# cur.execute(query)
-				# Confinement_Period = cur.fetchall()
-
-				# print("The period of captivity left is ",end="")
-				# print(Confinement_Period[0]['PConfinementPeriod'] - spend[0]['TIMESTAMPDIFF (YEAR, PDateofImprisonment, CURDATE())'])
 				hrs=result[0]['DWorkHours']
 				wage=result[0]['DWage']
 				print("Monthly wage of the asked prisoner is ",4*hrs*wage)
+			
 			else:
+
 				print("You can access only in your jail")
 
 		except Exception as e:
@@ -390,6 +383,7 @@ def jail():
 	print("1. Insert a tuple")
 	print("2. Delete a tuple")
 	print("3. Update a tuple")
+	print("4. Find monthly expenditure of a particular jail ")
 	val = int(input("Choose the query you want to execute> "))
 	if val == 1:
 		try:
@@ -503,6 +497,33 @@ def jail():
 			con.rollback()
 			print("Failed to delete from database")
 			print("************",e)	
+
+	if val==4:
+		try:
+			expenditure=0;
+			jid = int(input("Please Enter the Jails's id whose monthly expenditure you want to find out > "))
+			query = "SELECT PId,DWorkHours,DWage FROM PRISONER,DEPARTMENT WHERE (PDname=DName AND PJailId=DJailId AND PJailId = '%d')" %(jid)
+			cur.execute(query)
+			result = cur.fetchall()
+
+			for prisoner in result:
+				hrs=prisoner['DWorkHours']
+				wage=prisoner['DWage']
+				expenditure+=4*hrs*wage;
+			
+			query=	"SELECT SUM(POSalary) FROM POLICEOFFICER WHERE POJailId= '%d' " %(jid)
+			cur.execute(query)
+			result=cur.fetchall()
+			# print(result[0]['SUM(POSalary)'])
+			expenditure+= result[0]['SUM(POSalary)']
+			print("Total expenditure for the Jail is ->",expenditure)
+				# print(prisoner['PId'],hrs,wage)
+
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to find from database")
+			print("************",e)
 
 
 def policeofficer():
