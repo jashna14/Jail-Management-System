@@ -34,14 +34,16 @@ def prisoner(jid):
 				con.commit()
 
 				print("Inserted into Database")
+				print("")
 
 			else:
 				print("You can insert only in your jail")	
+				print("")
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to insert into database")
-			print("************",e)	
+			print("***",e,"***")	
 
 	if val == 2:
 		try:
@@ -55,13 +57,15 @@ def prisoner(jid):
 				con.commit()
 
 				print("Deleted from Database")
+				print("")
 			else:
 				print("You can delete only in your jail")
+				print("")
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to delete from database")
-			print("************",e)
+			print("************",e,"****")
 
 	if val == 3:
 		pid = int(input("Please Enter the Prisoner id whose attribute you want to modify> "))
@@ -113,6 +117,7 @@ def prisoner(jid):
 
 
 					print("Udated in Database")
+					print("")
 
 				if valu == 2:
 					inp = input("Please enter the new value> ")
@@ -120,7 +125,8 @@ def prisoner(jid):
 					cur.execute(query)
 					con.commit()
 
-					print("Udated in Database")	
+					print("Udated in Database")
+					print("")	
 
 				if valu == 3:
 					inp = input("Please enter the new value> ")
@@ -129,6 +135,7 @@ def prisoner(jid):
 					con.commit()
 
 					print("Udated in Database")
+					print("")
 					
 				if valu == 4:
 					inp = int(input("Please enter the new value> "))
@@ -150,6 +157,7 @@ def prisoner(jid):
 					con.commit()
 
 					print("Udated in Database")
+					print("")
 				# *****************
 				if valu == 5:
 					inp = input("Please enter the new value> ")
@@ -171,6 +179,7 @@ def prisoner(jid):
 					con.commit()
 
 					print("Udated in Database")
+					print("")
 
 				if valu == 6:
 					inp = input("Please enter the new value> ")
@@ -179,6 +188,7 @@ def prisoner(jid):
 					con.commit()
 
 					print("Udated in Database")
+					print("")
 
 				if valu == 7:
 					inp = int(input("Please enter the new value> "))
@@ -187,6 +197,7 @@ def prisoner(jid):
 					con.commit()
 
 					print("Udated in Database")	
+					print("")
 
 				if valu == 8:
 					inp = input("Please enter the new value> ")
@@ -195,6 +206,7 @@ def prisoner(jid):
 					con.commit()
 
 					print("Udated in Database")
+					print("")
 					
 				if valu == 9:
 					inp = input("Please enter the new value> ")
@@ -202,13 +214,15 @@ def prisoner(jid):
 					cur.execute(query)
 					con.commit()
 
-					print("Udated in Database")		
+					print("Udated in Database")	
+					print("")	
 			else:
-				print("You can modify only in your jail")					
+				print("You can modify only in your jail")
+				print("")					
 		except Exception as e:
 			con.rollback()
 			print("Failed to update in database")
-			print("************",e)
+			print("***",e,"***")
 
 	if val == 4:		
 		try:
@@ -222,13 +236,15 @@ def prisoner(jid):
 				age = cur.fetchall()
 				print("The age is ",end='')
 				print(age[0]['TIMESTAMPDIFF (YEAR, PDOB, CURDATE())'])
+				print("")
 			else:
 				print("You can access only in your jail")
+				print("")
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to find from database")
-			print("************",e)
+			print("***",e,"***")
 
 	if val == 5:		
 		try:
@@ -247,13 +263,15 @@ def prisoner(jid):
 
 				print("The period of captivity left is ",end="")
 				print(Confinement_Period[0]['PConfinementPeriod'] - spend[0]['TIMESTAMPDIFF (YEAR, PDateofImprisonment, CURDATE())'])
+				print("")
 			else:
 				print("You can access only in your jail")
+				print("")
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to find from database")
-			print("************",e)
+			print("***",e,"***")
 	if val==6:
 		try:
 			pid = int(input("Please Enter the Prisoner's id whose monthly wage you want to find out > "))
@@ -265,15 +283,17 @@ def prisoner(jid):
 				hrs=result[0]['DWorkHours']
 				wage=result[0]['DWage']
 				print("Monthly wage of the asked prisoner is ",4*hrs*wage)
+				print("")
 			
 			else:
 
 				print("You can access only in your jail")
+				print("")
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to find from database")
-			print("************",e)
+			print("***",e,"***")
 
 
 
@@ -301,14 +321,16 @@ def crime(jid):
 				con.commit()
 
 				print("Inserted into Database")
+				print("")
 
 			else:
-				print("You can insert only in your jail")	
+				print("You can insert only in your jail")
+				print("")	
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to insert into database")
-			print("************",e)	
+			print("***",e,"***")	
 
 	if val == 2:
 		try:
@@ -324,13 +346,15 @@ def crime(jid):
 				con.commit()
 
 				print("Deleted from Database")
+				print("")
 			else:
 				print("You can delete only in your jail")
+				print("")
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to delete from database")
-			print("************",e)
+			print("***",e,"***")
 
 	if val == 3:
 		cpid = int(input("Please Enter the Prisoner id whose attribute you want to modify> "))
@@ -352,7 +376,8 @@ def crime(jid):
 					cur.execute(query)
 					con.commit()
 
-					print("Udated in Database")
+					print("Updated in Database")
+					print("")
 
 				if valu == 2:
 					inp = input("Please enter the new value> ")
@@ -362,6 +387,7 @@ def crime(jid):
 					con.commit()
 
 					print("Udated in Database")
+					print("")
 
 				if valu == 3:
 					inp = input("Please enter the new value> ")
@@ -371,14 +397,16 @@ def crime(jid):
 					con.commit()		
 
 					print("Udated in Database")
+					print("")
 
 			else:
 				print("You can update only in your jail")
+				print("")
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to update from database")
-			print("************",e)					
+			print("***",e,"***")					
 
 def jail():
 	print("1. Insert a tuple")
@@ -400,12 +428,13 @@ def jail():
 			con.commit()
 
 			print("Inserted into Database")
+			print("")
 
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to insert into database")
-			print("************",e)
+			print("***",e,"***")
 
 	if val == 2:
 		try:
@@ -415,11 +444,12 @@ def jail():
 			con.commit()
 
 			print("Deleted from Database")
+			print("")
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to delete from database")
-			print("************",e)	
+			print("***",e,"***")	
 
 	if val == 3:
 		jid = int(input("Please Enter the Jail id whose attribute you want to modify> "))
@@ -465,6 +495,7 @@ def jail():
 				con.commit()
 
 				print("Udated in Database")
+				print("")
 
 			if valu == 2:
 				inp = input("Please enter the new value> ")
@@ -474,6 +505,8 @@ def jail():
 				con.commit()
 				
 				print("Udated in Database")
+				print("")
+
 
 			if valu == 3:
 				inp = input("Please enter the new value> ")
@@ -483,6 +516,7 @@ def jail():
 				con.commit()
 				
 				print("Udated in Database")
+				print("")
 
 			if valu == 4:
 				inp = int(input("Please enter the new value> "))
@@ -492,12 +526,12 @@ def jail():
 				con.commit()
 				
 				print("Udated in Database")		
-
+				print("")
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to delete from database")
-			print("************",e)	
+			print("***",e,"***")	
 
 	if val==4:
 		try:
@@ -518,13 +552,14 @@ def jail():
 			# print(result[0]['SUM(POSalary)'])
 			expenditure+= result[0]['SUM(POSalary)']
 			print("Total expenditure for the Jail is ->",expenditure)
+			print("")
 				# print(prisoner['PId'],hrs,wage)
 
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to find from database")
-			print("************",e)
+			print("***",e,"***")
 
 
 def policeofficer():
@@ -554,11 +589,13 @@ def policeofficer():
 			con.commit()
 
 			print("Inserted into Database")
+			print("")
+
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to insert into database")
-			print("************",e)	
+			print("***",e,"***")	
 
 	if val == 2:
 		try:
@@ -568,11 +605,13 @@ def policeofficer():
 			con.commit()
 
 			print("Deleted from Database")
+			print("")
+
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to delete from database")
-			print("************",e)
+			print("***",e,"***")
 
 	if val == 3:
 		poid = int(input("Please Enter the Police Officer id whose attribute you want to modify> "))
@@ -619,6 +658,8 @@ def policeofficer():
 
 
 				print("Udated in Database")
+				print("")
+
 
 			if valu == 2:
 				inp = input("Please enter the new value> ")
@@ -626,7 +667,9 @@ def policeofficer():
 				cur.execute(query)
 				con.commit()
 
-				print("Udated in Database")	
+				print("Udated in Database")
+				print("")
+
 
 			if valu == 3:
 				inp = input("Please enter the new value> ")
@@ -635,7 +678,8 @@ def policeofficer():
 				con.commit()
 
 				print("Udated in Database")
-			
+				print("")
+
 			if valu == 4:
 				inp = input("Please enter the new value> ")
 				
@@ -644,6 +688,7 @@ def policeofficer():
 				con.commit()
 
 				print("Udated in Database")
+				print("")
 
 			if valu == 5:
 				inp = input("Please enter the new value> ")
@@ -652,6 +697,7 @@ def policeofficer():
 				con.commit()
 
 				print("Udated in Database")
+				print("")
 
 			if valu == 6:
 				inp = int(input("Please enter the new value> "))
@@ -660,6 +706,7 @@ def policeofficer():
 				con.commit()
 
 				print("Udated in Database")	
+				print("")
 
 			if valu == 7:
 				inp = input("Please enter the new value> ")
@@ -668,7 +715,8 @@ def policeofficer():
 				con.commit()
 
 				print("Udated in Database")
-				
+				print("")
+
 			if valu == 8:
 				inp = input("Please enter the new value> ")
 				query = "UPDATE POLICEOFFICER SET JobType = '%s' WHERE POId = '%d'" %(inp , poid)
@@ -676,11 +724,12 @@ def policeofficer():
 				con.commit()
 
 				print("Udated in Database")		
+				print("")
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to update in database")
-			print("************",e)
+			print("***",e,"***")
 
 	if val == 4:		
 		try:
@@ -690,11 +739,13 @@ def policeofficer():
 			age = cur.fetchall()
 			print("The age is ",end="")
 			print(age[0]['TIMESTAMPDIFF (YEAR, PODOB, CURDATE())'])
+			print("")
+
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to find from database")
-			print("************",e)
+			print("***",e,"***")
 
 def policeofficercontact():
 	print("1. Insert a tuple")
@@ -714,11 +765,13 @@ def policeofficercontact():
 			con.commit()
 
 			print("Inserted into Database")
+			print("")
+
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to insert into database")
-			print("************",e)	
+			print("***",e,"***")	
 
 	if val == 2:
 		try:
@@ -730,11 +783,12 @@ def policeofficercontact():
 			con.commit()
 
 			print("Deleted from Database")
+			print("")
 			
 		except Exception as e:
 			con.rollback()
 			print("Failed to delete from database")
-			print("************",e)
+			print("***",e,"***")
 
 	if val == 3:
 
@@ -749,11 +803,13 @@ def policeofficercontact():
 			con.commit()
 
 			print("Udated in Database")
+			print("")
+
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to update from database")
-			print("************",e)							
+			print("***",e,"***")							
 
 
 def policeofficeremail():
@@ -774,11 +830,13 @@ def policeofficeremail():
 			con.commit()
 
 			print("Inserted into Database")
+			print("")
+
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to insert into database")
-			print("************",e)	
+			print("***",e,"***")	
 
 	if val == 2:
 		try:
@@ -790,11 +848,13 @@ def policeofficeremail():
 			con.commit()
 
 			print("Deleted from Database")
+			print("")
+
 			
 		except Exception as e:
 			con.rollback()
 			print("Failed to delete from database")
-			print("************",e)
+			print("***",e,"***")
 
 	if val == 3:
 
@@ -809,11 +869,13 @@ def policeofficeremail():
 			con.commit()
 
 			print("Udated in Database")
+			print("")
+
 
 		except Exception as e:
 			con.rollback()
 			print("Failed to update from database")
-			print("************",e)	
+			print("***",e,"***")	
 
 
 def avgexpense():
@@ -845,12 +907,13 @@ def avgexpense():
 		cnt=result[0]['COUNT(*)']
 
 		print("Average Government expenditure per prisoner -> ",expenditure/cnt)
+		print("")
 
 
 	except Exception as e:
 		con.rollback()
 		print("Failed to find from database")
-		print("************",e)
+		print("***",e,"***")
 
 
 def access(ch , Id):
@@ -922,6 +985,7 @@ def formulate(ch):
 			passw = getpass.getpass("Password for accessing database>>")
 			if passw == 'p':
 				print("Access granted")
+				print("")
 				access(ch,Id)
 			else:
 				print("Wrong Password")
@@ -932,6 +996,7 @@ def formulate(ch):
 		passw = getpass.getpass("Password for accessing database>>")
 		if passw == 'p':
 			print("Access granted")
+			print("")
 			access(ch , -1)
 		else:
 			print("Wrong Password")
@@ -942,7 +1007,7 @@ while(1):
 	username = input("Username for accessing MySQL:")
 	password = getpass.getpass("Password for accessing MySQL:")
 	#print(password)
-
+	ch=0
 
 	try:
 		con = pymysql.connect(host = 'localhost',
@@ -974,7 +1039,9 @@ while(1):
 					break	
 				else:
 					print("Please Enter a valid input")	
-
+	
+		if ch == 3:
+			break
 
 
 	except:
