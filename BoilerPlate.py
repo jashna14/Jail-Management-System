@@ -1,6 +1,7 @@
 import subprocess as sp
 import pymysql
 import pymysql.cursors
+import getpass
 
 def prisoner(jid):
 	
@@ -852,8 +853,6 @@ def avgexpense():
 		print("************",e)
 
 
-
-
 def access(ch , Id):
 	cur = con.cursor()
 	if ch == 1:
@@ -909,10 +908,7 @@ def access(ch , Id):
 			else:
 				print("Please Enter a valid input")				
 
-				
-							
-
-
+											
 
 def formulate(ch):
 	cur = con.cursor()
@@ -923,7 +919,7 @@ def formulate(ch):
 		cur.execute(query)
 		result = cur.fetchall()
 		if result[0]["COUNT(*)"] == 1:
-			passw = input("Please enter the Password>> ")
+			passw = getpass.getpass("Password for accessing database>>")
 			if passw == 'p':
 				print("Access granted")
 				access(ch,Id)
@@ -933,7 +929,7 @@ def formulate(ch):
 			print("Id not found or the Id does not corresponds to a Jailer")
 
 	if ch == 2:
-		passw = input("Please enter the Password> ")
+		passw = getpass.getpass("Password for accessing database>>")
 		if passw == 'p':
 			print("Access granted")
 			access(ch , -1)
@@ -941,14 +937,12 @@ def formulate(ch):
 			print("Wrong Password")
 
 
-
-
 while(1):
-	# temp = sp.call('clear',shell=True)
-	username = 'root'
-	password = 'firework'
-	# username = input("Username:")
-	# password = input("Password:")
+	temp = sp.call('clear',shell=True)
+	username = input("Username for accessing MySQL:")
+	password = getpass.getpass("Password for accessing MySQL:")
+	#print(password)
+
 
 	try:
 		con = pymysql.connect(host = 'localhost',
@@ -957,7 +951,7 @@ while(1):
 			db='JAILDB',
 			cursorclass=pymysql.cursors.DictCursor
 			)
-		# temp = sp.call('clear',shell=True)
+		temp = sp.call('clear',shell=True)
 
 		if(con.open):
 			print("Connected")
@@ -967,12 +961,12 @@ while(1):
 		with con:
 			cur = con.cursor()
 			while(1):
-				# temp = sp.call('clear',shell=True)
+				temp = sp.call('clear',shell=True)
 				print("1.Enter as a Jailer")
 				print("2.Enter as a Government Official")
 				print("3.Logout")
 				ch = int(input("Enter choice> "))
-				# temp = sp.call('clear',shell=True)
+				temp = sp.call('clear',shell=True)
 
 				if ch == 1 or ch == 2:
 					formulate(ch)
@@ -984,5 +978,5 @@ while(1):
 
 
 	except:
-		# temp = sp.call('clear',shell=True)
+		temp = sp.call('clear',shell=True)
 		print("Connection Refused: Either username or password is incorrect or user doesn't have access to database")
