@@ -37,18 +37,22 @@ def prisoner(jid):
 				cur.execute(query)
 				con.commit()
 
-				# query = "SELECT DHeadId FROM DEPARTMENT WHERE DJailId='%d' AND DName='%s' " %(row["jid"],row["dname"])
-				# cur.execute(query);
-				# result=cur.fetchall()
-				# poid=result[0]['DHeadId']
+				query = "SELECT DHeadId FROM DEPARTMENT WHERE DJailId='%d' AND DName='%s' " %(row["jid"],row["dname"])
+				cur.execute(query);
+				result=cur.fetchall()
+				poid=result[0]['DHeadId']
 				# print(poid)
 				# print(cur.fetchall())
 
 				# ***************************************************************************************
-				# query = "SELECT COUNT(*) FROM JWORKSFOR WHERE JId='%d' AND DName='%s'" %(row["jid"],row["dname"])
-				# query = "INSERT INTO JWORKSFOR VALUES('%d','%s','%d')" %(row["jid"],row["dname"],poid)
-				# cur.execute(query)
-				# con.commit()
+				query = "SELECT COUNT(*) FROM JWORKSFOR WHERE JId='%d' AND DName='%s'" %(row["jid"],row["dname"])
+				cur.execute(query)
+				result=cur.fetchall()
+				cnt=result[0]['COUNT(*)']
+				if(cnt == 0):
+					query = "INSERT INTO JWORKSFOR VALUES('%d','%s','%d')" %(row["jid"],row["dname"],poid)
+					cur.execute(query)
+					con.commit()
 				# ***************************************************************************************
 
 				print("Inserted into Database")
@@ -839,7 +843,7 @@ def policeofficercontact():
 
 			else:
 				print("INVALID CONTACT NUMBER")
-				
+
 			print("Updated in Database")
 			print("")
 

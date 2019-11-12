@@ -52,7 +52,7 @@ CREATE TABLE `POLICEOFFICER` (
 
 LOCK TABLES `POLICEOFFICER` WRITE;
 
-INSERT INTO `POLICEOFFICER` VALUES (1,'Tanish','Lad',1,'Yawatmal,Maharashtra','1992-12-07',10000,'2015-11-05','Jailer'),(2,'Manish','Lad',2,'Mumbai,Maharashtra','1954-08-15',25000,'1985-09-04','Jailer'),(3,'Kushagra','Aggarwal',1,'Kolkata','1914-02-14',5000,'1948-02-14','Gaurd'),(4,'Shantanu','Aggarwal',2,'Satna,Madhya Pradesh','1947-08-15',7000,'1975-05-18','Guard'),(5,'Manas','Kabre',1,'Bengaluru','1987-10-31',5000,'2005-08-14','Guard');
+INSERT INTO `POLICEOFFICER` VALUES (1,'Tanish','Lad',1,'Yawatmal,Maharashtra','1992-12-07',10000,'2015-11-05','Jailer'),(2,'Manish','Lad',2,'Mumbai,Maharashtra','1954-08-15',25000,'1985-09-04','Jailer'),(3,'Kushagra','Aggarwal',1,'Kolkata','1914-02-14',5000,'1948-02-14','Gaurd'),(4,'Shantanu','Aggarwal',2,'Satna,Madhya Pradesh','1947-08-15',7000,'1975-05-18','Guard'),(5,'Manas','Kabre',1,'Bengaluru','1987-10-31',5000,'2005-08-14','Guard'),(6,'Nikunj','Nawal',2,'Indore,MP','2000-03-14',30000,'2019-11-05','Guard');
 
 UNLOCK TABLES;
 
@@ -80,7 +80,7 @@ CREATE TABLE `DEPARTMENT` (
 
 LOCK TABLES `DEPARTMENT` WRITE;
 
-INSERT INTO `DEPARTMENT` VALUES (1, 'Toilet Cleaning', 3, 200, 14),(2,'Kitchen',4,100,20);
+INSERT INTO `DEPARTMENT` VALUES (1, 'Toilet Cleaning', 3, 200, 20),(2,'Toilet Cleaning',4,200,20),(1, 'Kitchen', 5, 100, 14),(2, 'Kitchen', 6, 100, 14);
 
 UNLOCK TABLES;
 
@@ -256,7 +256,7 @@ CREATE TABLE `POLICEOFFICERCONTACT` (
 
 LOCK TABLES `POLICEOFFICERCONTACT` WRITE;
 
-INSERT INTO `POLICEOFFICERCONTACT` VALUES (1 ,'9865321245'),(2 ,'7845129826'),(3 ,'6589421578'),(4 ,'2563985641'),(4 ,'2514869574');
+INSERT INTO `POLICEOFFICERCONTACT` VALUES (1 ,'9865321245'),(2 ,'7845129826'),(3 ,'6589421578'),(4 ,'2563985641'),(4 ,'2514869574'),(6,'9876543210');
 
 UNLOCK TABLES;
 
@@ -277,6 +277,6 @@ CREATE TABLE `POLICEOFFICEREMAIL` (
 
 LOCK TABLES `POLICEOFFICEREMAIL` WRITE;
 
-INSERT INTO `POLICEOFFICEREMAIL` VALUES (5,'manas1@gmail.com'),(5,'manas2@gmail.com');
+INSERT INTO `POLICEOFFICEREMAIL` VALUES (5,'manas1@gmail.com'),(5,'manas2@gmail.com'),(6,'nikunjnawal@gmail.com');
 
 UNLOCK TABLES;
