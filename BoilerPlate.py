@@ -3,11 +3,14 @@ import pymysql
 import pymysql.cursors
 
 def prisoner(jid):
+	
 	print("1. Insert a tuple")
 	print("2. Delete a tuple")
 	print("3. Update a tuple")
 	print("4. Calculate the age of the prisoner")
 	print("5. Calculate the period of captivity left for a prisoner")
+	print("6. Calculate the monthly wage of a prisoner")
+
 	val = int(input("Choose the query you want to execute> "))
 	if val == 1:
 		try:
@@ -216,7 +219,7 @@ def prisoner(jid):
 				query = "SELECT TIMESTAMPDIFF (YEAR, PDOB, CURDATE()) FROM PRISONER WHERE PId = '%d'" %(pid)
 				cur.execute(query)
 				age = cur.fetchall()
-				print("The age is ",end="")
+				print("The age is ",end='')
 				print(age[0]['TIMESTAMPDIFF (YEAR, PDOB, CURDATE())'])
 			else:
 				print("You can access only in your jail")
@@ -250,6 +253,35 @@ def prisoner(jid):
 			con.rollback()
 			print("Failed to find from database")
 			print("************",e)
+	if val==6:
+		try:
+			pid = int(input("Please Enter the Prisoner's id whose monthly wage you want to find out > "))
+			query = "SELECT PJailId,DWorkHours,DWage FROM PRISONER,DEPARTMENT WHERE (PDname=DName AND PJailId=DJailId AND PId = '%d')" %(pid)
+			cur.execute(query)
+			result = cur.fetchall()
+			if result[0]['PJailId'] == jid:
+				# query = "SELECT TIMESTAMPDIFF (YEAR, PDateofImprisonment, CURDATE()) FROM PRISONER WHERE PId = '%d'" %(pid)
+				# cur.execute(query)
+				# spend = cur.fetchall()
+
+				# query = "SELECT PConfinementPeriod FROM PRISONER WHERE PId = '%d'" %(pid)
+				# cur.execute(query)
+				# Confinement_Period = cur.fetchall()
+
+				# print("The period of captivity left is ",end="")
+				# print(Confinement_Period[0]['PConfinementPeriod'] - spend[0]['TIMESTAMPDIFF (YEAR, PDateofImprisonment, CURDATE())'])
+				hrs=result[0]['DWorkHours']
+				wage=result[0]['DWage']
+				print("Monthly wage of the asked prisoner is ",4*hrs*wage)
+			else:
+				print("You can access only in your jail")
+
+		except Exception as e:
+			con.rollback()
+			print("Failed to find from database")
+			print("************",e)
+
+
 
 def crime(jid):
 	print("1. Insert a tuple")
@@ -852,7 +884,7 @@ def formulate(ch):
 while(1):
 	# temp = sp.call('clear',shell=True)
 	username = 'root'
-	password = '16061999'
+	password = 'firework'
 	# username = input("Username:")
 	# password = input("Password:")
 
@@ -892,6 +924,3 @@ while(1):
 	except:
 		# temp = sp.call('clear',shell=True)
 		print("Connection Refused: Either username or password is incorrect or user doesn't have access to database")
-
-
-
