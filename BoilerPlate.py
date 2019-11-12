@@ -812,7 +812,64 @@ def policeofficeremail():
 		except Exception as e:
 			con.rollback()
 			print("Failed to update from database")
-			print("************",e)									
+			print("************",e)	
+
+
+def avgexpense():
+	try:
+		# expenditure=0;
+		# jid = int(input("Please Enter the Jails's id whose monthly expenditure you want to find out > "))
+		# query = "SELECT PId,DWorkHours,DWage FROM PRISONER,DEPARTMENT WHERE (PDname=DName AND PJailId=DJailId AND PJailId = '%d')" %(jid)
+		# cur.execute(query)
+		# result = cur.fetchall()
+
+		# for prisoner in result:
+		# 	hrs=prisoner['DWorkHours']
+		# 	wage=prisoner['DWage']
+		# 	expenditure+=4*hrs*wage;
+		
+		# query=	"SELECT SUM(POSalary) FROM POLICEOFFICER WHERE POJailId= '%d' " %(jid)
+		# cur.execute(query)
+		# result=cur.fetchall()
+		# # print(result[0]['SUM(POSalary)'])
+		# expenditure+= result[0]['SUM(POSalary)']
+		# print("Total expenditure for the Jail is ->",expenditure)
+		# 	# print(prisoner['PId'],hrs,wage)
+
+		expenditure=0;
+
+		query="SELECT JId from JAIL";
+		cur.execute(query);
+		result=cur.fetchall()
+		for jail in result:
+			jid=jail['JId']
+			# print(jid)
+			query = "SELECT PId,DWorkHours,DWage FROM PRISONER,DEPARTMENT WHERE (PDname=DName AND PJailId=DJailId AND PJailId = '%d')" %(jid)
+			cur.execute(query)
+			result2 = cur.fetchall()
+			for prisoner in result2:
+				hrs=prisoner['DWorkHours']
+				wage=prisoner['DWage']
+				expenditure+=4*hrs*wage;
+		
+			query = "SELECT SUM(POSalary) FROM POLICEOFFICER WHERE POJailId= '%d' " %(jid)
+			cur.execute(query)
+			result2=cur.fetchall()
+			expenditure += result2[0]['SUM(POSalary)']
+
+		query="SELECT COUNT(*) FROM PRISONER"
+		cur.execute(query)
+		result=cur.fetchall()
+		cnt=result[0]['COUNT(*)']
+
+		print("Average Government expenditure per prisoner -> ",expenditure/cnt)
+
+
+	except Exception as e:
+		con.rollback()
+		print("Failed to find from database")
+		print("************",e)
+
 
 
 
@@ -853,7 +910,8 @@ def access(ch , Id):
 			print("2. POLICEOFFICER")
 			print("3. POLICEOFFICERCONTACT")
 			print("4. POLICEOFFICEREMAIL")
-			print("5. Exit")
+			print("5. Avg. expenditure of a prisoner")
+			print("6. Exit")
 			val = int(input("Choose the Table you want to edit> "))
 			if val == 1:
 				jail()
@@ -863,7 +921,9 @@ def access(ch , Id):
 				policeofficercontact()
 			if val == 4:
 				policeofficeremail()
-			if val ==5:
+			if val == 5:
+				avgexpense()
+			if val ==6:
 				break
 			else:
 				print("Please Enter a valid input")				
