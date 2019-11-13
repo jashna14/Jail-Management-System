@@ -2,6 +2,16 @@ import subprocess as sp
 import pymysql
 import pymysql.cursors
 import getpass
+import re
+
+regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+
+def check(email):  
+    if(re.search(regex,email)):  
+        return 1  
+          
+    else:  
+        return 0
 
 def prisoner(jid):
 	
@@ -927,13 +937,16 @@ def policeofficeremail():
 			print("Enter new police officer's email details: ")
 			row["POId"] = int(input("Police Officer Id: "))
 			row["POEmail"] = input(" Police Officer Email: ")
+			email = row["POEmail"]
+			if check(email) == 1 :
+				query = "INSERT INTO POLICEOFFICEREMAIL VALUES('%d', '%s')" %(row["POId"], row["POEmail"])
+				cur.execute(query)
+				con.commit()
 
-			query = "INSERT INTO POLICEOFFICEREMAIL VALUES('%d', '%s')" %(row["POId"], row["POEmail"])
-			cur.execute(query)
-			con.commit()
-
-			print("Inserted into Database")
-			print("")
+				print("Inserted into Database")
+				print("")
+			else:
+				print("Wrong email format")	
 
 
 		except Exception as e:
@@ -966,13 +979,18 @@ def policeofficeremail():
 			poemail = input("Please Enter the corresponding email> ")
 
 			inp = input("Please enter the new contact> ")
+			email = inp
 
-			query = "UPDATE POLICEOFFICERCONTACT SET POEmail = '%s' WHERE (POId = '%d' AND POEmail = '%s')" %(inp , poid,poemail)
-			cur.execute(query)
-			con.commit()
+			if check(email) == 1 :
 
-			print("Udated in Database")
-			print("")
+				query = "UPDATE POLICEOFFICERCONTACT SET POEmail = '%s' WHERE (POId = '%d' AND POEmail = '%s')" %(inp , poid,poemail)
+				cur.execute(query)
+				con.commit()
+
+				print("Udated in Database")
+				print("")
+			else:
+				print("Wrong email format")	
 
 
 		except Exception as e:
