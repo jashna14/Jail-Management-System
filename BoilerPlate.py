@@ -293,7 +293,7 @@ def prisoner(jid):
 		except Exception as e:
 			con.rollback()
 			print("Failed to update in database")
-			print("***",e,"***")
+			print("****",e,"****")
 
 	if val == 4:		
 		try:
